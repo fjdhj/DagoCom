@@ -6,6 +6,7 @@ import java.io.InputStream;
 public class SerialReader implements Runnable{
 
 	private InputStream in;
+	private boolean debug = false;
 	
 	public SerialReader(InputStream in) {
 		this.in = in;
@@ -20,13 +21,24 @@ public class SerialReader implements Runnable{
 	        //Lecture dans le port
 	        try{
 	            while ( ( len = in.read(buffer)) > -1 ){
-	                System.out.print(new String(buffer,0,len));
+	            	String ligne = new String(buffer,0,len);
+	                System.out.print(ligne);
+	                isOk(ligne);
 	            }
 	            
 	        }catch ( IOException e ){
 	            e.printStackTrace();
 	        }            
 		}	
+	}
+	
+	private void isOk(String ligne) {
+		if(ligne.equals("ok")) {
+			this.notifyAll();
+			if(debug) {
+                System.out.print(ligne);
+			}
+		}
 	}
 
 }
