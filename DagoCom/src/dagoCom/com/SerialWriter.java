@@ -10,7 +10,7 @@ public class SerialWriter implements Runnable{
 	
 	private static OutputStream out;
 	private static String str = "";
-	private static boolean running = true;
+	public static boolean running = true;
 	
 	public SerialWriter() {
 		System.out.println("Initialisation du SerialWriter");

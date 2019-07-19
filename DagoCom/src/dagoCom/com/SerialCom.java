@@ -43,10 +43,12 @@ public class SerialCom {
 			    in = serialPort.getInputStream();
 				
 				Reader = new SerialReader(in);
+				Reader.running = true;
 				ReaderThread = new Thread(Reader);
 				ReaderThread.start();
 				
 				Writer = new SerialWriter();
+				Writer.running = true;
 				serialThread = new Thread(Writer);
 				serialThread.start();
 				return true;
