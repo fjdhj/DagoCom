@@ -12,5 +12,5 @@ A FAIRE
   
     NOTE :  -Traitement info :  -echo -> console
                                 -ok -> à envoyer à print (ecrire si debug mode)
-                                -T: -> pour la lecture temperature (ecrire si debug)
+                                -ok T: -> pour la lecture temperature (ecrire si debug)
             -Utilisaton de la fopnction dans mainMenu (addText)
