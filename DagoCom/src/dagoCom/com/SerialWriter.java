@@ -25,6 +25,7 @@ public class SerialWriter implements Runnable{
 	public void run() {
 		System.out.println("SerialWriter: Thread lancé");
 		while(running) {
+			System.out.println("Envoie de : " + str);
 			if(!str.isEmpty()) {
 					try { 
 					 System.out.println(str);
@@ -36,7 +37,7 @@ public class SerialWriter implements Runnable{
 					} catch ( IOException e ){
 						e.printStackTrace();
 					}finally {
-						str = str.substring(str.indexOf("\n")+2);
+						str = "";
 					}
 			}
 		}
@@ -44,6 +45,7 @@ public class SerialWriter implements Runnable{
 	
 	public static void sendCommand(String command) {
 		str += command + "\n";
+		
 	}
 	
 	public static void stop() {

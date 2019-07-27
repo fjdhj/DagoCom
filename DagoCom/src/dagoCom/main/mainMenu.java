@@ -4,11 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -22,8 +21,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import dagoCom.com.SerialCom;
 import dagoCom.com.PrintManager;
+import dagoCom.com.SerialCom;
 import dagoCom.com.SerialWriter;
 
 public class mainMenu extends JFrame {
@@ -52,6 +51,7 @@ public class mainMenu extends JFrame {
 	
 	private JMenu JMoption = new JMenu("Option");
 	private JMenuItem JMIparam = new JMenuItem("Paramètre");
+	private static JCheckBoxMenuItem JCBMIdebug = new JCheckBoxMenuItem("Console debug");
 	
 	
 	public mainMenu() {
@@ -140,11 +140,13 @@ public class mainMenu extends JFrame {
 		JMIparam.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				optionMenu opt = new optionMenu();
+				
 			}
 			
 		});
+		
 		JMoption.add(JMIparam);
+		JMoption.add(JCBMIdebug);
 		
 		menuBar.add(JMoption);
 		
@@ -167,4 +169,7 @@ public class mainMenu extends JFrame {
 
 	}
 
+	public static boolean getDebug() {
+		return(JCBMIdebug.isSelected());
+	}
 }

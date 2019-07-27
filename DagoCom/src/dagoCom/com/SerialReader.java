@@ -8,7 +8,6 @@ import dagoCom.main.mainMenu;
 public class SerialReader implements Runnable{
 
 	private InputStream in;
-	private boolean debug = false;
 	public static boolean running = true;
 	
 	public SerialReader(InputStream in) {
@@ -33,9 +32,12 @@ public class SerialReader implements Runnable{
 	                }else if(ligne.equals("T:")) {
 	                	
 	                }else {
-	                	mainMenu.addText(ligne);
+	                	if(!mainMenu.getDebug()) 
+	                		mainMenu.addText(ligne);
 	                }
-   
+	                
+	                if(mainMenu.getDebug())
+	                	mainMenu.addText("Recep: " + ligne);
 	            }
 	            
 	        }catch ( IOException e ){
