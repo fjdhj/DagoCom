@@ -50,7 +50,7 @@ public class mainMenu extends JFrame {
 	private JMenuBar menuBar = new JMenuBar();
 	
 	private JMenu JMoption = new JMenu("Option");
-	private JMenuItem JMIparam = new JMenuItem("Paramètre");
+	private JMenuItem JMIparam = new JMenuItem("ParamÃ¨tre");
 	private static JCheckBoxMenuItem JCBMIdebug = new JCheckBoxMenuItem("Console debug");
 	
 	
@@ -83,11 +83,11 @@ public class mainMenu extends JFrame {
 		cons.add(JPsend, BorderLayout.SOUTH);
 		
 		/*
-		 * Ajout et gestion contenu JPanel other -> le reste de la JFrame (a définir)
+		 * Ajout et gestion contenu JPanel other -> le reste de la JFrame (a dÃ©finir)
 		 */
 		//1er partie : connexion imprimante
-		JCBcom.setSelectedIndex(1); //On sélectionne l'item 1 par défaut soit COM5
-		JCBbauds.setSelectedIndex(6); //On sélectionne l'item 6 par défaut soit 250000
+		JCBcom.setSelectedIndex(1); //On sÃ©lectionne l'item 1 par dÃ©faut soit COM5
+		JCBbauds.setSelectedIndex(6); //On sÃ©lectionne l'item 6 par dÃ©faut soit 250000
 		JBcon.addActionListener(new ActionListener() { //Bouton connexion/deconnexion --> connect a l'imprimante
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -97,7 +97,7 @@ public class mainMenu extends JFrame {
 						JBcon.setText("Deconnexion");
 						stateJBcon = !stateJBcon;
 					}else{
-						JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la connexion. Esseyez ultèrieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la connexion. Esseyez ultÃ¨rieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
 					}
 					
 				}else{
@@ -105,7 +105,7 @@ public class mainMenu extends JFrame {
 						JBcon.setText("Connexion");
 						stateJBcon = !stateJBcon;
 					}else{
-						JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la déconnexion. Esseyez ultèrieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la dÃ©connexion. Esseyez ultÃ¨rieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
 					}
 				}
 			}			
@@ -140,7 +140,7 @@ public class mainMenu extends JFrame {
 		JMIparam.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 			}
 			
 		});
@@ -153,7 +153,7 @@ public class mainMenu extends JFrame {
 		/*
 		 * Gestion JFrame avec spliter
 		 */
-		//Definition paramètre Spliter
+		//Definition paramÃ¨tre Spliter
 		JSPmain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, other, cons);
 		JSPmain.setDividerLocation(675);
 		//Ajout du tout dans la JFrame

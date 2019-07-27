@@ -76,6 +76,10 @@ public class SerialCom {
 		
 	}
 	
+	public static Thread getReaderThread() {
+		return ReaderThread;
+	}
+	
 	public static boolean close() {
 		
 		try {
@@ -84,8 +88,8 @@ public class SerialCom {
 		
 		ReaderThread.interrupt();
 		SerialReader.stop();
-			serialPort.close();
-			commPort.close();
+	/*		serialPort.close();
+			commPort.close();*/
 			in.close();
 		} catch (IOException | SecurityException e) {
 			e.printStackTrace();
