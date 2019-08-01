@@ -85,58 +85,66 @@ public class mainMenu extends JFrame {
 		/*
 		 * Ajout et gestion contenu JPanel other -> le reste de la JFrame (a définir)
 		 */
-		if(dagoCom.optionTXT.getContent(0).equals("client")) {
-			//1er partie : connexion imprimante
-			JCBcom.setSelectedIndex(1); //On sélectionne l'item 1 par défaut soit COM5
-			JCBbauds.setSelectedIndex(6); //On sélectionne l'item 6 par défaut soit 250000
-			JBcon.addActionListener(new ActionListener() { //Bouton connexion/deconnexion --> connect a l'imprimante
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					if(stateJBcon){ //true = boutton affiche connexion
-						JBsd.setEnabled(true);
-						if(SerialCom.open()) {
-							JBcon.setText("Deconnexion");
-							stateJBcon = !stateJBcon;
-						}else{
-							JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la connexion. Esseyez ultèrieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
-						}
-						
+		
+		//1er partie : connexion imprimante
+		JCBcom.setSelectedIndex(1); //On sélectionne l'item 1 par défaut soit COM5
+		JCBbauds.setSelectedIndex(6); //On sélectionne l'item 6 par défaut soit 250000
+		JBcon.addActionListener(new ActionListener() { //Bouton connexion/deconnexion --> connect a l'imprimante
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(stateJBcon){ //true = boutton affiche connexion
+					JBsd.setEnabled(true);
+					if(SerialCom.open()) {
+						JBcon.setText("Deconnexion");
+						stateJBcon = !stateJBcon;
 					}else{
-						JBsd.setEnabled(false);
-						if(SerialCom.close()) {
-							JBcon.setText("Connexion");
-							stateJBcon = !stateJBcon;
-						}else{
-							JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la déconnexion. Esseyez ultèrieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
-						}
-					}
-				}			
-			});
-			
-			JBsd.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					JFileChooser jfc = new JFileChooser();
-					jfc.setMultiSelectionEnabled(false);
-					jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-					int rep = jfc.showDialog(ref, "Blabla");
-					if(rep == JFileChooser.APPROVE_OPTION) {
-						PrintManager.Print(jfc.getSelectedFile());
+						JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la connexion. Esseyez ultèrieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
 					}
 					
-				}});
-			
-			JBsd.setEnabled(false);
-			
-			JPcon.add(JCBcom);
-			JPcon.add(JCBbauds);
-			JPcon.add(JBcon);
-			JPcon.add(JBsd);
+				}else{
+					JBsd.setEnabled(false);
+					if(SerialCom.close()) {
+						JBcon.setText("Connexion");
+						stateJBcon = !stateJBcon;
+					}else{
+						JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la déconnexion. Esseyez ultèrieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
+					}
+				}
+			}			
+		});
+		
+		//boutton pour l'impression
+		JBsd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser jfc = new JFileChooser();
+				jfc.setMultiSelectionEnabled(false);
+				jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int rep = jfc.showDialog(ref, "Blabla");
+				if(rep == JFileChooser.APPROVE_OPTION) {
+					PrintManager.Print(jfc.getSelectedFile());
+				}
+				
+			}});
+		
+		JBsd.setEnabled(false);
+		
+		JPcon.add(JCBcom);
+		JPcon.add(JCBbauds);
+		JPcon.add(JBcon);
+		JPcon.add(JBsd);
+		if(dagoCom.optionTXT.getContent(0).equals("client")) {
+			//Si client
+			/*
+			 * Ajouter un choix entre Connexion USB ou via socket
+			 */
 		}else {
 			//Si serveur
 			
-		
+		/*
+		 * Ajouter l'addresse ip local en dessou du reste (JPanel -> JPcon)
+		 */
 		
 		}
 			
