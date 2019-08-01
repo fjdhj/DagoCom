@@ -1,21 +1,21 @@
 package dagoCom.main;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class dagoCom {
 	
 	public static String version = "a0.2";
-	public static String[] runFile;
+	public static String[] defVal = {"run=client", "conect=serial"};
+	
+	public static fileReader optionTXT = new fileReader();
+
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		System.out.println(System.getProperty("os.name").substring(0, 7)); 
 		
+				optionTXT.init(new File("option.txt"), defVal);
 		
 		mainMenu frame = new mainMenu();
 	}
