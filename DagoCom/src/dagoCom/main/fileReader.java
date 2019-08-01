@@ -34,11 +34,13 @@ public class fileReader {
 			content=null;
 			br = new BufferedReader(new FileReader(path));
 			String line;
+			String brut = "";
 			int i = 0;
 			while((line = br.readLine()) != null){
-				content[i]=line;
+				brut += line + "\n";
 				i++;
 			}
+			content = brut.split("\n");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,8 +59,11 @@ public class fileReader {
 
 	
 	public boolean checkFile() {
-		for(int i = 0; i <= content.length; i++) {
-			if((content[i].substring(content[i].lastIndexOf("="))) != (defVal[i].substring(defVal[i].lastIndexOf("=")))) {
+		for(int i = 0; i < content.length; i++) {
+			if(!(content[i].substring(0, content[i].lastIndexOf("="))).equals(defVal[i].substring(0, defVal[i].lastIndexOf("=")))) {
+				System.out.println(path.toString() + " est incorrecte");
+				System.out.println(content[i].substring(0, content[i].lastIndexOf("=")));
+				System.out.println(defVal[i].substring(0, defVal[i].lastIndexOf("=")));
 				path.delete();
 				createFile();
 				update();
@@ -72,10 +77,11 @@ public class fileReader {
 
 	
 	private void createFile() {
+		System.out.println("Création de : " + path.toString());
 		BufferedWriter bw = null;
 		try {
 			 bw = new BufferedWriter(new FileWriter(path));
-			for(int i = 0; i<=defVal.length; i++) {
+			for(int i = 0; i<defVal.length; i++) {
 				bw.write(defVal[i] + "\n");
 			}
 		} catch (IOException e) {
@@ -91,14 +97,14 @@ public class fileReader {
 	
 	
 	public String getContent(int line) {
-		return content[line].substring(content[line].lastIndexOf("="));
+		return content[line].substring(content[line].lastIndexOf("=")+1);
 	}
 	
 	
 	public String getContent(String val) {
-		for(int i = 0; i <= defVal.length; i++){
-			if((defVal[i]).substring(defVal[i].lastIndexOf("=")).equals(val)) {
-				return content[i].substring(content[i].lastIndexOf("="));
+		for(int i = 0; i < defVal.length; i++){
+			if((defVal[i]).substring(0, defVal[i].lastIndexOf("=")).equals(val)) {
+				return content[i].substring(content[i].lastIndexOf("=")+1);
 			}
 		}
 		return null;
