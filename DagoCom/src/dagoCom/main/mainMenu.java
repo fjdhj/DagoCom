@@ -44,8 +44,9 @@ public class mainMenu extends JFrame {
 	private JComboBox JCBbauds = new JComboBox(new String[] {"2400", "9600", "19200", "38400", "57600", "115200", "250000"});
 	private JButton JBcon = new JButton("Connexion");
 	private boolean stateJBcon = true;
-	
 	private JButton JBsd = new JButton("SD");
+	
+	private JTextField JTFip = new JTextField();
 	
 	private JMenuBar menuBar = new JMenuBar();
 	
@@ -130,15 +131,26 @@ public class mainMenu extends JFrame {
 		
 		JBsd.setEnabled(false);
 		
-		JPcon.add(JCBcom);
-		JPcon.add(JCBbauds);
-		JPcon.add(JBcon);
-		JPcon.add(JBsd);
+
 		if(dagoCom.optionTXT.getContent(0).equals("client")) {
 			//Si client
 			/*
 			 * Ajouter un choix entre Connexion USB ou via socket
 			 */
+			
+			JTFip.setName("IP");
+			
+			JCBcom.addItem("Local");
+			
+			JCBcom.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(JCBcom.getSelectedItem().equals("Local")) {
+						JPcon.remove(JBsd);
+						//JPcon.add(comp);
+					}
+					
+				}});
+			
 		}else {
 			//Si serveur
 			
@@ -148,6 +160,11 @@ public class mainMenu extends JFrame {
 		
 		}
 			
+		JPcon.add(JCBcom);
+		JPcon.add(JCBbauds);
+		JPcon.add(JBcon);
+		JPcon.add(JBsd);
+		
 		JPcon.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		//Ajout JPanel dans other
 		other.setLayout(new BorderLayout());
