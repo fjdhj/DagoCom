@@ -2,6 +2,7 @@ package dagoCom.main;
 
 import java.io.IOException;
 
+import dagoCom.graph.graphMenuMapping;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -46,10 +47,15 @@ public class mainDagoCom extends Application {
 	private void initGraphMenu() {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(mainDagoCom.class.getResource("/dagoCom/graph/graphMenu.fxml"));
+		
 
 		try {
 			AnchorPane graphMenu = (AnchorPane) loader.load();
 			conteneurPrincipale.setCenter(graphMenu);
+			
+			graphMenuMapping controleur = loader.getController();
+			controleur.setMainApp(this);	
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
