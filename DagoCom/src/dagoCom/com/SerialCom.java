@@ -2,7 +2,7 @@ package dagoCom.com;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.Enumeration;
 
 import javax.swing.JOptionPane;
 
@@ -12,6 +12,8 @@ import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.UnsupportedCommOperationException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class SerialCom {
 	public static CommPortIdentifier portIdentifier;
@@ -27,7 +29,6 @@ public class SerialCom {
 	
 	public static boolean open() {
 		try {
-			
 			portIdentifier = CommPortIdentifier.getPortIdentifier("COM5");
 			if(portIdentifier.isCurrentlyOwned()) {
 				System.err.println("Une erreure est survenu : le port est déja utilisé par une autre application (" + portIdentifier.getCurrentOwner() + ")");
@@ -96,6 +97,21 @@ public class SerialCom {
 			return false;
 		}
 		return true;
+		
+	}
+	
+	public static ObservableList<String> getCommPort() {	
+		Enumeration thePorts = CommPortIdentifier.getPortIdentifiers();
+		ObservableList<String> port = FXCollections.observableArrayList();
+
+		while(thePorts.hasMoreElements()) {
+			CommPortIdentifier com = (CommPortIdentifier) thePorts.nextElement();
+			if(com.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+				port.add(com.getName());
+			}
+		}
+		
+		return port;
 		
 	}
 }
