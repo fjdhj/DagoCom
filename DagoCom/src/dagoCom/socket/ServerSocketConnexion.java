@@ -32,7 +32,7 @@ public class ServerSocketConnexion extends SocketConnexion{
 	}
 	
 	@Override
-	protected void close() {
+	public void close() {
 		try {
 			Running = false;
 			if(socket != null) {

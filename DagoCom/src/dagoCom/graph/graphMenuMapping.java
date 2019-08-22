@@ -4,14 +4,18 @@ import javax.swing.JOptionPane;
 
 import com.sun.javafx.collections.ChangeHelper;
 
+import dagoCom.Observer.Observer;
 import dagoCom.com.SerialCom;
 import dagoCom.main.mainDagoCom;
-import dagoCom.socket.client;
+import dagoCom.socket.SocketConnexion;
+import dagoCom.socket.SocketConnexion.States;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
@@ -23,7 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
-public class graphMenuMapping{
+public class graphMenuMapping implements Observer{
 	
 	@FXML
 	private ComboBox<String> CBconType;
@@ -50,7 +54,9 @@ public class graphMenuMapping{
 	
 	private boolean stateBcon = true;
 	private boolean local = false;
-	
+	private SocketConnexion client;
+	Alert probleme = new Alert(AlertType.ERROR);
+
 	private mainDagoCom main;
 	
 	public graphMenuMapping() {}
@@ -66,11 +72,11 @@ public class graphMenuMapping{
 				}else{
 					JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la connexion. Esseyez ultÃ¨rieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
 				}
-			}else if(client.connect(TFip.getText())) {
-					Bcon.setText("Deconnexion");
-					SMBprint.setDisable(false);
-					stateBcon = !stateBcon;
-				}
+			}else {
+				client = new SocketConnexion(TFip.getText(),3000);
+				client.addObserver(this);
+				client.connect();
+			}
 			
 		}else{
 			if(!local) {
@@ -81,10 +87,8 @@ public class graphMenuMapping{
 				}else{
 					JOptionPane.showMessageDialog(null, "Une erreur est survenu lors de la dÃ©connexion. Esseyez ultÃ¨rieurement", "Erreur", JOptionPane .ERROR_MESSAGE);
 				}
-			}else if(client.connect(TFip.getText())) {
-				Bcon.setText("Deconnexion");
-				SMBprint.setDisable(false);
-				stateBcon = !stateBcon;
+			}else {
+				client.close();
 			}
 		}
 	}
@@ -122,6 +126,34 @@ public class graphMenuMapping{
 				}}});
 		CBbauds.setItems(bauds);
 		
+	}
+
+	@Override
+	public void update(States state) {
+		switch(state) {
+		case ATTENTE_CONNEXION: //Attend une connexion (ServerSocket)
+			break;
+		case CONNECTE:			//La connexion réussi
+			break;
+		case CONNEXION:			//La connexion est en cours mais pas encore réussie
+			Bcon.setText("Deconnexion");
+			SMBprint.setDisable(false);
+			stateBcon = !stateBcon;
+			break;
+		case DECONNECTE:		//La socket est déconnectée
+			Bcon.setText("Connexion");
+			SMBprint.setDisable(false);
+			stateBcon = !stateBcon;
+			break;
+		case ERREUR_COMM:		//Une erreur de communication est survenue
+			JOptionPane.showMessageDialog(null, "Une erreur de communication est survenue","Erreur",JOptionPane.OK_OPTION,null);
+			break;
+		case ERREUR_CONNEXION:	//La connexion a échoué
+			JOptionPane.showMessageDialog(null, "La connexion a échoué","Erreur",JOptionPane.OK_OPTION,null);
+			break;
+		case LOG:				//La connexion a reçu des donnée et veut mettre a jour la vue
+			break;
+		}
 	}
 	 
 	

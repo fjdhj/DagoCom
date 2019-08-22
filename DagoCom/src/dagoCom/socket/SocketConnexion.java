@@ -88,7 +88,7 @@ public class SocketConnexion{
 	}
 	
 	//Envoie le message dans la socket
-	protected void send(String message) {
+	public void send(String message) {
 		if(Running) {
 			try {
 				out.write(message.getBytes());
@@ -103,7 +103,7 @@ public class SocketConnexion{
 		}	
 	}
 
-	protected String getLogs() {
+	public String getLogs() {
 		return logs;
 	}
 
@@ -112,20 +112,22 @@ public class SocketConnexion{
 		notifyObserver(States.LOG);
 	}
 	//Ferme les flux et arrete les Threads
-	protected void close() {
-		try {
-			Running = false;
-			if(socket!=null) {
-				socket.close();
-				timer.cancel();
-				timer.purge();
-				listenerThread.join();
+	public void close() {
+		if(Running) {
+			try {
+				Running = false;
+				if(socket!=null) {
+					socket.close();
+					timer.cancel();
+					timer.purge();
+					listenerThread.join();
+				}
+				out.close();
+			} catch (IOException | InterruptedException e) {
+				e.printStackTrace();
 			}
-			out.close();
-		} catch (IOException | InterruptedException e) {
-			e.printStackTrace();
 		}
-			notifyObserver(States.DECONNECTE);
+		notifyObserver(States.DECONNECTE);
 	}
 	
 	/*Appelé lorsque la connexion échoue ou est annulée (évite des nullPointerException dans le ServerSocket)
